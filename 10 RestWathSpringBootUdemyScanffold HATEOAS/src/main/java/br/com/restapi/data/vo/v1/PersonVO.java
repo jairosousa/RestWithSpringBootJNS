@@ -4,12 +4,14 @@ import java.io.Serializable;
 
 import org.springframework.hateoas.ResourceSupport;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.dozermapper.core.Mapping;
 
 @SuppressWarnings("serial")
 public class PersonVO extends ResourceSupport implements Serializable {
 
 	@Mapping("id")
+	@JsonProperty("id")
 	private Long key;
 
 	private String firstName;
