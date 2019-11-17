@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import br.com.restapi.serializatiion.converter.YamlJackson2HttpMessageConverter;
@@ -53,6 +54,12 @@ public class WebConfig implements WebMvcConfigurer {
 		
 	}
 	
-	
+	/**
+	 * Habilitar CORS Globalmente
+	 */
+	public void addCorsMappings(CorsRegistry registry) {
+		registry.addMapping("/**") // habilita para qualquer dominio
+			.allowedMethods("GET", "POST", "PUT", "PATH", "DELETE", "OPTIONS", "HEADE", "TRACE", "CONNECT");
+	}
 
 }

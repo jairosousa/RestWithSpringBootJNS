@@ -22,7 +22,7 @@ import br.com.restapi.service.PersonService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-@CrossOrigin(origins = "http://localhost:8080")
+//@CrossOrigin(origins = "http://localhost:8080")
 @Api(value = "Person Endpoint", description = "Descrição para person", tags = {"Person Endpoint"})
 @RestController
 @RequestMapping("/api/person/v1")
@@ -41,7 +41,7 @@ public class PersonController {
 		return persons;
 	}
 
-	@CrossOrigin(origins = {"http://localhost:8080", "http://www.meusite.com.br"})  
+//	@CrossOrigin(origins = {"http://localhost:8080", "http://www.meusite.com.br"})  
 	@ApiOperation(value = "Buscar pessoas por ID")
 	@GetMapping(value = "/{id}", produces = { "application/json", "application/xml", "application/x-yaml" })
 	public PersonVO findById(@PathVariable("id") Long id) {
