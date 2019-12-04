@@ -33,99 +33,93 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @RequestMapping("/api/person/v1")
 public class PersonController {
-	
+
 	@Autowired
 	private PersonServices service;
-	
-	@ApiOperation(value = "Find all people" ) 
+
+	@Autowired
+	private PagedResourcesAssembler<PersonVO> assembler;
+
+	@ApiOperation(value = "Find all people")
 	@GetMapping(produces = { "application/json", "application/xml", "application/x-yaml" })
-	public ResponseEntity<PagedResources<PersonVO>> findAll(
+	public ResponseEntity<?> findAll(@RequestParam(value = "page", defaultValue = "0") int page,
+			@RequestParam(value = "limit", defaultValue = "12") int limit,
+			@RequestParam(value = "direction", defaultValue = "asc") String direction) {
+
+		var sortDirection = "desc".equalsIgnoreCase(direction) ? Direction.DESC : Direction.ASC;
+
+		Pageable pageable = PageRequest.of(page, limit, Sort.by(sortDirection, "firstName"));
+
+		Page<PersonVO> persons = service.findAll(pageable);
+
+		persons.stream()
+				.forEach(p -> p.add(linkTo(methodOn(PersonController.class).findById(p.getKey())).withSelfRel()));
+
+		PagedResources<?> resource = assembler.toResource(persons);
+
+		return new ResponseEntity<>(resource, HttpStatus.OK);
+	}
+
+	@ApiOperation(value = "Find all people")
+	@GetMapping(value = "/findPersonByName/{firstName}", produces = { "application/json", "application/xml",
+			"application/x-yaml" })
+	public ResponseEntity<?> findPersonByName(@PathVariable("firstName") String firstName,
 			@RequestParam(value = "page", defaultValue = "0") int page,
 			@RequestParam(value = "limit", defaultValue = "12") int limit,
-			@RequestParam(value = "direction", defaultValue = "asc") String direction,
-			PagedResourcesAssembler assembler
-			) {
-		
+			@RequestParam(value = "direction", defaultValue = "asc") String direction) {
+
 		var sortDirection = "desc".equalsIgnoreCase(direction) ? Direction.DESC : Direction.ASC;
-		
+
 		Pageable pageable = PageRequest.of(page, limit, Sort.by(sortDirection, "firstName"));
-		
-		Page<PersonVO> persons =  service.findAll(pageable);
-		
-		persons
-			.stream()
-			.forEach(p -> p.add(
-					linkTo(methodOn(PersonController.class).findById(p.getKey())).withSelfRel()
-				)
-			);
-		
-		return new ResponseEntity<>(assembler.toResource(persons), HttpStatus.OK);
+
+		Page<PersonVO> persons = service.findPersonByName(firstName, pageable);
+
+		persons.stream()
+				.forEach(p -> p.add(linkTo(methodOn(PersonController.class).findById(p.getKey())).withSelfRel()));
+
+		PagedResources<?> resource = assembler.toResource(persons);
+
+		return new ResponseEntity<>(resource, HttpStatus.OK);
 	}
-	
-	@ApiOperation(value = "Find all people" ) 
-	@GetMapping(value = "/findPersonByName/{firstName}", produces = { "application/json", "application/xml", "application/x-yaml" })
-	public ResponseEntity<PagedResources<PersonVO>> findPersonByName(
-			@PathVariable("firstName") String firstName,
-			@RequestParam(value = "page", defaultValue = "0") int page,
-			@RequestParam(value = "limit", defaultValue = "12") int limit,
-			@RequestParam(value = "direction", defaultValue = "asc") String direction,
-			PagedResourcesAssembler assembler
-			) {
-		
-		var sortDirection = "desc".equalsIgnoreCase(direction) ? Direction.DESC : Direction.ASC;
-		
-		Pageable pageable = PageRequest.of(page, limit, Sort.by(sortDirection, "firstName"));
-		
-		Page<PersonVO> persons =  service.findPersonByName(firstName, pageable);
-		
-		persons
-			.stream()
-			.forEach(p -> p.add(
-					linkTo(methodOn(PersonController.class).findById(p.getKey())).withSelfRel()
-				)
-			);
-		
-		return new ResponseEntity<>(assembler.toResource(persons), HttpStatus.OK);
-	}
-	
-	@ApiOperation(value = "Find a specific person by your ID" )
+
+	@ApiOperation(value = "Find a specific person by your ID")
 	@GetMapping(value = "/{id}", produces = { "application/json", "application/xml", "application/x-yaml" })
 	public PersonVO findById(@PathVariable("id") Long id) {
 		PersonVO personVO = service.findById(id);
 		personVO.add(linkTo(methodOn(PersonController.class).findById(id)).withSelfRel());
 		return personVO;
-	}	
-	
-	@ApiOperation(value = "Create a new person") 
-	@PostMapping(produces = { "application/json", "application/xml", "application/x-yaml" }, 
-			consumes = { "application/json", "application/xml", "application/x-yaml" })
+	}
+
+	@ApiOperation(value = "Create a new person")
+	@PostMapping(produces = { "application/json", "application/xml", "application/x-yaml" }, consumes = {
+			"application/json", "application/xml", "application/x-yaml" })
 	public PersonVO create(@RequestBody PersonVO person) {
 		PersonVO personVO = service.create(person);
 		personVO.add(linkTo(methodOn(PersonController.class).findById(personVO.getKey())).withSelfRel());
 		return personVO;
 	}
-	
+
 	@ApiOperation(value = "Update a specific person")
-	@PutMapping(produces = { "application/json", "application/xml", "application/x-yaml" }, 
-			consumes = { "application/json", "application/xml", "application/x-yaml" })
+	@PutMapping(produces = { "application/json", "application/xml", "application/x-yaml" }, consumes = {
+			"application/json", "application/xml", "application/x-yaml" })
 	public PersonVO update(@RequestBody PersonVO person) {
 		PersonVO personVO = service.update(person);
 		personVO.add(linkTo(methodOn(PersonController.class).findById(personVO.getKey())).withSelfRel());
 		return personVO;
 	}
-	
-	@ApiOperation(value = "Disabled a specific person by your ID" )
+
+	@ApiOperation(value = "Disabled a specific person by your ID")
 	@PatchMapping(value = "/{id}", produces = { "application/json", "application/xml", "application/x-yaml" })
 	public PersonVO disabledPersons(@PathVariable("id") Long id) {
 		PersonVO personVO = service.disabledPerson(id);
 		return personVO;
 	}
-	
+
 	@ApiOperation(value = "Delete a specific person by your ID")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable("id") Long id) {
 		service.delete(id);
 		return ResponseEntity.ok().build();
-	}	
-	
+	}
+
 }

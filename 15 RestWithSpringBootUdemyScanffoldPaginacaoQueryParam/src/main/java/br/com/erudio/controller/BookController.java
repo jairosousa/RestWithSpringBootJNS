@@ -36,14 +36,15 @@ public class BookController {
 	@Autowired
 	private BookServices service;
 	
+	@Autowired
+	private PagedResourcesAssembler<BookVO> assembler;
+	
 	@ApiOperation(value = "Find all books" )
 	@GetMapping(produces = { "application/json", "application/xml", "application/x-yaml" })
-	public ResponseEntity<PagedResources<BookVO>> findAll(
+	public ResponseEntity<?> findAll(
 			@RequestParam(value = "page", defaultValue = "0") int page,
 			@RequestParam(value = "limit", defaultValue = "12") int limit,
-			@RequestParam(value = "direction", defaultValue = "asc") String direction,
-			PagedResourcesAssembler assembler
-			) {
+			@RequestParam(value = "direction", defaultValue = "asc") String direction) {
 		
 		var sortDirection = "desc".equalsIgnoreCase(direction) ? Direction.DESC : Direction.ASC;
 		
@@ -58,7 +59,9 @@ public class BookController {
 				)
 			);
 		
-		return new ResponseEntity<>(assembler.toResource(books), HttpStatus.OK);
+		PagedResources<?> resource = assembler.toResource(books);
+
+		return new ResponseEntity<>(resource, HttpStatus.OK);
 	}	
 	
 	@ApiOperation(value = "Find a specific book by your ID" )
