@@ -3,11 +3,15 @@ package br.com.erudio.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.erudio.converter.DozerConverter;
 import br.com.erudio.data.model.Book;
+import br.com.erudio.data.model.Person;
 import br.com.erudio.data.vo.v1.BookVO;
+import br.com.erudio.data.vo.v1.PersonVO;
 import br.com.erudio.exception.ResourceNotFoundException;
 import br.com.erudio.repository.BookRepository;
 
@@ -23,9 +27,15 @@ public class BookServices {
 		return vo;
 	}
 	
-	public List<BookVO> findAll() {
-		return DozerConverter.parseListObjects(repository.findAll(), BookVO.class);
-	}	
+	public Page<BookVO> findAll(Pageable pageable) {
+		var page = repository.findAll(pageable);
+		
+		return page.map(this::convertToBook);
+	}
+	
+	private BookVO convertToBook(Book entity) {
+		return DozerConverter.parseObject(entity, BookVO.class);
+	}
 	
 	public BookVO findById(Long id) {
 
