@@ -5,6 +5,7 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.erudio.converter.DozerConverter;
@@ -25,8 +26,10 @@ public class PersonServices {
 		return vo;
 	}
 	
-	public List<PersonVO> findAll() {
-		return DozerConverter.parseListObjects(repository.findAll(), PersonVO.class);
+	public List<PersonVO> findAll(Pageable pageable) {
+		var entities= repository.findAll(pageable).getContent();
+		
+		return DozerConverter.parseListObjects(entities, PersonVO.class);
 	}	
 	
 	public PersonVO findById(Long id) {
