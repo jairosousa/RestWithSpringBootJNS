@@ -1,7 +1,7 @@
 package br.com.jnsdevs.RestWithSpringBootJNS.services;
 
+import br.com.jnsdevs.RestWithSpringBootJNS.data.vo.v1.PersonVO;
 import br.com.jnsdevs.RestWithSpringBootJNS.exceptions.ResourceNotFoundException;
-import br.com.jnsdevs.RestWithSpringBootJNS.model.Person;
 import br.com.jnsdevs.RestWithSpringBootJNS.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,12 +22,12 @@ public class PersonServices {
     @Autowired
     private PersonRepository personRepository;
 
-    public Person create(Person person) {
+    public PersonVO create(PersonVO person) {
         logger.info("Creating one person!");
         return personRepository.save(person);
     }
 
-    public Person update(Person person) {
+    public PersonVO update(PersonVO person) {
         logger.info("Updating one person!");
 
         var entity = findById(person.getId());
@@ -40,12 +40,12 @@ public class PersonServices {
         return personRepository.save(entity);
     }
 
-    public Person findById(Long id) {
+    public PersonVO findById(Long id) {
         return personRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("No record found for this ID"));
     }
 
-    public List<Person> findAll() {
+    public List<PersonVO> findAll() {
         logger.info("Finding one person!");
         return personRepository.findAll();
     }
