@@ -2,7 +2,7 @@ package br.com.jnsdevs.RestWithSpringBootJNS.services;
 
 import br.com.jnsdevs.RestWithSpringBootJNS.data.vo.v1.PersonVO;
 import br.com.jnsdevs.RestWithSpringBootJNS.exceptions.ResourceNotFoundException;
-import br.com.jnsdevs.RestWithSpringBootJNS.mapper.DozerMapper;
+import br.com.jnsdevs.RestWithSpringBootJNS.mapper.MMapper;
 import br.com.jnsdevs.RestWithSpringBootJNS.model.Person;
 import br.com.jnsdevs.RestWithSpringBootJNS.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +26,8 @@ public class PersonServices {
 
     public PersonVO create(PersonVO personVO) {
         logger.info("Creating one person!");
-        var entity = DozerMapper.parseObject(personVO, Person.class);
-        return DozerMapper.parseObject(personRepository.save(entity), PersonVO.class);
+        var entity = MMapper.parseObject(personVO, Person.class);
+        return MMapper.parseObject(personRepository.save(entity), PersonVO.class);
     }
 
     public PersonVO update(PersonVO personVO) {
@@ -40,26 +40,26 @@ public class PersonServices {
         entityVO.setAddress(personVO.getAddress());
         entityVO.setGender(personVO.getGender());
 
-        var entity = DozerMapper.parseObject(entityVO, Person.class);
+        var entity = MMapper.parseObject(entityVO, Person.class);
 
-        return DozerMapper.parseObject(personRepository.save(entity), PersonVO.class);
+        return MMapper.parseObject(personRepository.save(entity), PersonVO.class);
     }
 
     public PersonVO findById(Long id) {
         var person = personRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("No record found for this ID"));
-        return DozerMapper.parseObject(person, PersonVO.class);
+        return MMapper.parseObject(person, PersonVO.class);
     }
 
     public List<PersonVO> findAll() {
         logger.info("Finding one person!");
-        return DozerMapper.parseListObject(personRepository.findAll(), PersonVO.class);
+        return MMapper.parseListObject(personRepository.findAll(), PersonVO.class);
     }
 
     public void delete(Long id) {
         logger.info("Deleting one person!");
         var entity = findById(id);
-        personRepository.delete(DozerMapper.parseObject(entity, Person.class));
+        personRepository.delete(MMapper.parseObject(entity, Person.class));
     }
 
 }

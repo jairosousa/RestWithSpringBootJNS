@@ -2,7 +2,7 @@ package br.com.jnsdevs.RestWithSpringBootJNS.unittests.mapper;
 
 
 import br.com.jnsdevs.RestWithSpringBootJNS.data.vo.v1.PersonVO;
-import br.com.jnsdevs.RestWithSpringBootJNS.mapper.DozerMapper;
+import br.com.jnsdevs.RestWithSpringBootJNS.mapper.MMapper;
 import br.com.jnsdevs.RestWithSpringBootJNS.model.Person;
 import br.com.jnsdevs.RestWithSpringBootJNS.unittests.mapper.mocks.MockPerson;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,7 +23,7 @@ public class DozerConverterTest {
 	
 	@Test
 	public void parseEntityToVoTest() {
-		PersonVO output = DozerMapper.parseObject(inputObject.mockEntity(), PersonVO.class);
+		PersonVO output = MMapper.parseObject(inputObject.mockEntity(), PersonVO.class);
 		assertEquals(Long.valueOf(0L), output.getId());
 		assertEquals("FirstNameTest0", output.getFirstName());
 		assertEquals("LastNameTest0", output.getLastName());
@@ -34,7 +34,7 @@ public class DozerConverterTest {
 	
 	@Test
 	public void parseVOToEntityTest() {
-		Person output = DozerMapper.parseObject(inputObject.mockVO(), Person.class);
+		Person output = MMapper.parseObject(inputObject.mockVO(), Person.class);
 		assertEquals(Long.valueOf(0L), output.getId());
 		assertEquals("FirstNameTest0", output.getFirstName());
 		assertEquals("LastNameTest0", output.getLastName());
@@ -45,7 +45,7 @@ public class DozerConverterTest {
 	
 	@Test
 	public void parseListEntityToListVoTest() {
-		List<Person> outpuList = DozerMapper.parseListObject(inputObject.mockVOList(), Person.class);
+		List<Person> outpuList = MMapper.parseListObject(inputObject.mockVOList(), Person.class);
 		
 		Person otputZero = outpuList.get(0);
 		assertEquals(Long.valueOf(0L), otputZero.getId());
@@ -64,7 +64,7 @@ public class DozerConverterTest {
 	
 	@Test
 	public void parseListVOToListEntityTest() {
-		List<PersonVO> outpuList = DozerMapper.parseListObject(inputObject.mockEntityList(), PersonVO.class);
+		List<PersonVO> outpuList = MMapper.parseListObject(inputObject.mockEntityList(), PersonVO.class);
 		
 		PersonVO otputZero = outpuList.get(0);
 		assertEquals(Long.valueOf(0L), otputZero.getId());
