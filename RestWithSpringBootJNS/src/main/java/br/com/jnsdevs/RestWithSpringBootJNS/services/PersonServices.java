@@ -1,6 +1,7 @@
 package br.com.jnsdevs.RestWithSpringBootJNS.services;
 
 import br.com.jnsdevs.RestWithSpringBootJNS.data.vo.v1.PersonVO;
+import br.com.jnsdevs.RestWithSpringBootJNS.data.vo.v2.PersonVOV2;
 import br.com.jnsdevs.RestWithSpringBootJNS.exceptions.ResourceNotFoundException;
 import br.com.jnsdevs.RestWithSpringBootJNS.mapper.MMapper;
 import br.com.jnsdevs.RestWithSpringBootJNS.model.Person;
@@ -28,6 +29,12 @@ public class PersonServices {
         logger.info("Creating one person!");
         var entity = MMapper.parseObject(personVO, Person.class);
         return MMapper.parseObject(personRepository.save(entity), PersonVO.class);
+    }
+
+    public PersonVOV2 createV2(PersonVOV2 personV2) {
+        logger.info("Creating one person with V2!");
+        var entity = MMapper.parseObject(personV2, Person.class);
+        return MMapper.parseObject(personRepository.save(entity), PersonVOV2.class);
     }
 
     public PersonVO update(PersonVO personVO) {
