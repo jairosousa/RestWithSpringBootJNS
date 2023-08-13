@@ -1,10 +1,8 @@
 package br.com.jnsdevs.RestWithSpringBootJNS.services;
 
 import br.com.jnsdevs.RestWithSpringBootJNS.data.vo.v1.PersonVO;
-import br.com.jnsdevs.RestWithSpringBootJNS.data.vo.v2.PersonVOV2;
 import br.com.jnsdevs.RestWithSpringBootJNS.exceptions.ResourceNotFoundException;
 import br.com.jnsdevs.RestWithSpringBootJNS.mapper.MMapper;
-import br.com.jnsdevs.RestWithSpringBootJNS.mapper.custom.PersonMapper;
 import br.com.jnsdevs.RestWithSpringBootJNS.model.Person;
 import br.com.jnsdevs.RestWithSpringBootJNS.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,19 +24,10 @@ public class PersonServices {
     @Autowired
     private PersonRepository personRepository;
 
-    @Autowired
-    private PersonMapper personMapper;
-
     public PersonVO create(PersonVO personVO) {
         logger.info("Creating one person!");
         var entity = MMapper.parseObject(personVO, Person.class);
         return MMapper.parseObject(personRepository.save(entity), PersonVO.class);
-    }
-
-    public PersonVOV2 createV2(PersonVOV2 personV2) {
-        logger.info("Creating one person with V2!");
-        var entity = personMapper.convertVoToEntity(personV2);
-        return personMapper.convertEntityToVO(personRepository.save(entity));
     }
 
     public PersonVO update(PersonVO personVO) {
