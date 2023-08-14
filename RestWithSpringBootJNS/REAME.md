@@ -1,5 +1,10 @@
 # Rest With Spring Boot 3.0
 
+
+## Repositorio do Curso
+
+[leandrocgsi/spring-boot-playground](https://github.com/leandrocgsi/spring-boot-playground)
+
 ## Banco MySQL
 
 ```shell
