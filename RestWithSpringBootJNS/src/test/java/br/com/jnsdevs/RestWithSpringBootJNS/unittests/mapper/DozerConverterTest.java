@@ -30,7 +30,6 @@ public class DozerConverterTest {
 		assertEquals("LastNameTest0", output.getLastName());
 		assertEquals("Adress Test0", output.getAddress());
 		assertEquals("Male", output.getGender());
-		
 	}
 	
 	@Test
