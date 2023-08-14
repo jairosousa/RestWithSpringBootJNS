@@ -3,5 +3,5 @@
 ## Banco MySQL
 
 ```shell
-$ docker run --name dev-mysql -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=rest_with_spring_boot_db -d -p 3306:3306 mysql
+$ docker run --name dev-mysql -e MYSQL_ROOT_PASSWORD=admin@123 -e MYSQL_DATABASE=rest_with_spring_boot_db -d -p 3306:3306 mysql
 ```

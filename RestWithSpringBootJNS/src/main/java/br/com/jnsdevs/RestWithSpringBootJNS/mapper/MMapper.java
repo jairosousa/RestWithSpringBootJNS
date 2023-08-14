@@ -1,7 +1,6 @@
 package br.com.jnsdevs.RestWithSpringBootJNS.mapper;
 
 import org.modelmapper.ModelMapper;
-
 import java.util.ArrayList;
 import java.util.List;
 
