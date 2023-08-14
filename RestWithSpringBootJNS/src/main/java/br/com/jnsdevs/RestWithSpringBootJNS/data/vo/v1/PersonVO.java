@@ -1,6 +1,7 @@
 package br.com.jnsdevs.RestWithSpringBootJNS.data.vo.v1;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.github.dozermapper.core.Mapping;
 import org.springframework.hateoas.RepresentationModel;
 
@@ -12,17 +13,17 @@ import java.util.Objects;
  * @Created 13/08/2023 - 11:30
  */
 
+@JsonPropertyOrder({"id", "firstName", "lastName", "address", "gender"})
 public class PersonVO extends RepresentationModel<PersonVO> implements Serializable {
 
     private static final long serialVersionUID = 3330394165600146589L;
 
+    @JsonProperty("id")
     @Mapping("id")
     private Long key;
 
-    @JsonProperty("first_name")
     private String firstName;
 
-    @JsonProperty("last_name")
     private String lastName;
 
     private String address;

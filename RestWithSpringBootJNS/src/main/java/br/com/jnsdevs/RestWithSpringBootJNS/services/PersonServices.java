@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
@@ -30,7 +31,9 @@ public class PersonServices {
     public PersonVO create(PersonVO personVO) {
         logger.info("Creating one person!");
         var entity = DozerMapper.parseObject(personVO, Person.class);
-        return DozerMapper.parseObject(personRepository.save(entity), PersonVO.class);
+        PersonVO vo = DozerMapper.parseObject(personRepository.save(entity), PersonVO.class);
+        vo.add(linkTo(methodOn(PersonController.class).findById(vo.getKey())).withSelfRel());
+        return vo;
     }
 
     public PersonVO update(PersonVO personVO) {
@@ -45,7 +48,9 @@ public class PersonServices {
 
         var entity = DozerMapper.parseObject(entityVO, Person.class);
 
-        return DozerMapper.parseObject(personRepository.save(entity), PersonVO.class);
+        PersonVO vo = DozerMapper.parseObject(personRepository.save(entity), PersonVO.class);
+        vo.add(linkTo(methodOn(PersonController.class).findById(personVO.getKey())).withSelfRel());
+        return vo;
     }
 
     public PersonVO findById(Long id) {
@@ -58,7 +63,11 @@ public class PersonServices {
 
     public List<PersonVO> findAll() {
         logger.info("Finding one person!");
-        return DozerMapper.parseListObject(personRepository.findAll(), PersonVO.class);
+        List<PersonVO> personVOS = DozerMapper.parseListObject(personRepository.findAll(), PersonVO.class);
+        personVOS
+                .stream()
+                .forEach(vo -> vo.add(linkTo(methodOn(PersonController.class).findById(vo.getKey())).withSelfRel()));
+        return personVOS;
     }
 
     public void delete(Long id) {
