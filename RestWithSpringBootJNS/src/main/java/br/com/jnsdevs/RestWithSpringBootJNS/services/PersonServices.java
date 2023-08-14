@@ -2,6 +2,7 @@ package br.com.jnsdevs.RestWithSpringBootJNS.services;
 
 import br.com.jnsdevs.RestWithSpringBootJNS.controllers.PersonController;
 import br.com.jnsdevs.RestWithSpringBootJNS.data.vo.v1.PersonVO;
+import br.com.jnsdevs.RestWithSpringBootJNS.exceptions.RequiredObjectIsNullException;
 import br.com.jnsdevs.RestWithSpringBootJNS.exceptions.ResourceNotFoundException;
 import br.com.jnsdevs.RestWithSpringBootJNS.mapper.DozerMapper;
 import br.com.jnsdevs.RestWithSpringBootJNS.model.Person;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Logger;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -30,6 +32,9 @@ public class PersonServices {
 
     public PersonVO create(PersonVO personVO) {
         logger.info("Creating one person!");
+
+        if (Objects.isNull(personVO)) throw new RequiredObjectIsNullException();
+
         var entity = DozerMapper.parseObject(personVO, Person.class);
         PersonVO vo = DozerMapper.parseObject(personRepository.save(entity), PersonVO.class);
         vo.add(linkTo(methodOn(PersonController.class).findById(vo.getKey())).withSelfRel());
@@ -38,6 +43,8 @@ public class PersonServices {
 
     public PersonVO update(PersonVO personVO) {
         logger.info("Updating one person!");
+
+        if (Objects.isNull(personVO)) throw new RequiredObjectIsNullException();
 
         var entityVO = findById(personVO.getKey());
 

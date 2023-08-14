@@ -1,6 +1,7 @@
 package br.com.jnsdevs.RestWithSpringBootJNS.services;
 
 import br.com.jnsdevs.RestWithSpringBootJNS.data.vo.v1.PersonVO;
+import br.com.jnsdevs.RestWithSpringBootJNS.exceptions.RequiredObjectIsNullException;
 import br.com.jnsdevs.RestWithSpringBootJNS.model.Person;
 import br.com.jnsdevs.RestWithSpringBootJNS.repository.PersonRepository;
 import br.com.jnsdevs.RestWithSpringBootJNS.unittests.mapper.mocks.MockPerson;
@@ -87,6 +88,18 @@ class PersonServicesTest {
     }
 
     @Test
+    void testCreateWithNullPerson() {
+        Exception exception = assertThrows(RequiredObjectIsNullException.class, () -> {
+            service.create(null);
+        });
+
+        String expectedMessage = "It is not allowed to persist a null object!";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
     void testUpdate() {
         Person entity = input.mockEntity(1);
         entity.setId(1l);
@@ -114,6 +127,17 @@ class PersonServicesTest {
         assertEquals("Female", result.getGender());
     }
 
+    @Test
+    void testUpdateWithNullPerson() {
+        Exception exception = assertThrows(RequiredObjectIsNullException.class, () -> {
+            service.update(null);
+        });
+
+        String expectedMessage = "It is not allowed to persist a null object!";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
 
     @Test
     void findAll() {
