@@ -9,6 +9,7 @@ import br.com.jnsdevs.RestWithSpringBootJNS.model.Person;
 import br.com.jnsdevs.RestWithSpringBootJNS.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import jakarta.transaction.Transactional;
 
 import java.util.List;
 import java.util.Objects;
@@ -75,6 +76,20 @@ public class PersonServices {
                 .stream()
                 .forEach(vo -> vo.add(linkTo(methodOn(PersonController.class).findById(vo.getKey())).withSelfRel()));
         return personVOS;
+    }
+
+    @Transactional
+    public PersonVO disablePerson(Long id) {
+
+        logger.info("Disabling one person!");
+
+        personRepository.disablePerson(id);
+
+        var entity = personRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
+        var vo = DozerMapper.parseObject(entity, PersonVO.class);
+        vo.add(linkTo(methodOn(PersonController.class).findById(id)).withSelfRel());
+        return vo;
     }
 
     public void delete(Long id) {
