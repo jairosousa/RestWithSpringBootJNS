@@ -1,11 +1,14 @@
 package br.com.jnsdevs.RestWithSpringBootJNS.integrationtests.vo;
 
+import jakarta.xml.bind.annotation.XmlRootElement;
+
 import java.io.Serializable;
 
 /**
  * @Autor Jairo Nascimento
  * @Created 14/08/2023 - 19:27
  */
+@XmlRootElement
 public class PersonVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
