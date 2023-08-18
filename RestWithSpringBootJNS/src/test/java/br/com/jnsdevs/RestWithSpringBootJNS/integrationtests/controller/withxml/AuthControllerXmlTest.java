@@ -3,7 +3,6 @@ package br.com.jnsdevs.RestWithSpringBootJNS.integrationtests.controller.withxml
 import br.com.jnsdevs.RestWithSpringBootJNS.configs.TestConfigs;
 import br.com.jnsdevs.RestWithSpringBootJNS.data.vo.v1.security.AccountCredentialsVO;
 import br.com.jnsdevs.RestWithSpringBootJNS.data.vo.v1.security.TokenVO;
-import br.com.jnsdevs.RestWithSpringBootJNS.integrationtests.controller.withyaml.mapper.YMLMapper;
 import br.com.jnsdevs.RestWithSpringBootJNS.integrationtests.testcontainers.AbstractIntegrationTest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
