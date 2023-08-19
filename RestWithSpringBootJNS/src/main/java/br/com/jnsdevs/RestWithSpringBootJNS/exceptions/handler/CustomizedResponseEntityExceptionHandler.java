@@ -4,6 +4,7 @@ import br.com.jnsdevs.RestWithSpringBootJNS.exceptions.ExceptionResponse;
 import br.com.jnsdevs.RestWithSpringBootJNS.exceptions.InvalidJwtAuthenticationException;
 import br.com.jnsdevs.RestWithSpringBootJNS.exceptions.RequiredObjectIsNullException;
 import br.com.jnsdevs.RestWithSpringBootJNS.exceptions.ResourceNotFoundException;
+import com.auth0.jwt.exceptions.JWTDecodeException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

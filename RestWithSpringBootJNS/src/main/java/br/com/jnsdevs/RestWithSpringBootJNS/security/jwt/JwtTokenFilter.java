@@ -5,7 +5,9 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
@@ -29,12 +31,22 @@ public class JwtTokenFilter extends GenericFilterBean {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
         String token = tokenProvider.resolveToken((HttpServletRequest) request);
-        if (token != null && tokenProvider.validateToken(token)) {
-            Authentication auth = tokenProvider.getAuthentication(token);
-            if (auth != null) {
-                SecurityContextHolder.getContext().setAuthentication(auth);
+        HttpServletResponse httpresponse = (HttpServletResponse) response;
+        try {
+            if (token != null && tokenProvider.validateToken(token)) {
+                Authentication auth = tokenProvider.getAuthentication(token);
+                if (auth != null) {
+                    SecurityContextHolder.getContext().setAuthentication(auth);
+                }
             }
+        } catch (Exception ex) {
+            SecurityContextHolder.clearContext();
+            httpresponse.sendError(HttpStatus.FORBIDDEN.value(), ex.getMessage());
+            return;
         }
-        chain.doFilter(request, response);
+
+        chain.doFilter(request, httpresponse);
     }
+
+
 }
