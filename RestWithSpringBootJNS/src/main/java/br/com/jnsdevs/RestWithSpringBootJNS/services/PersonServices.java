@@ -8,6 +8,8 @@ import br.com.jnsdevs.RestWithSpringBootJNS.mapper.DozerMapper;
 import br.com.jnsdevs.RestWithSpringBootJNS.model.Person;
 import br.com.jnsdevs.RestWithSpringBootJNS.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
 
@@ -69,13 +71,14 @@ public class PersonServices {
         return vo;
     }
 
-    public List<PersonVO> findAll() {
+    public Page<PersonVO> findAll(Pageable pageable) {
         logger.info("Finding one person!");
-        List<PersonVO> personVOS = DozerMapper.parseListObject(personRepository.findAll(), PersonVO.class);
-        personVOS
-                .stream()
-                .forEach(vo -> vo.add(linkTo(methodOn(PersonController.class).findById(vo.getKey())).withSelfRel()));
-        return personVOS;
+        Page<Person> personPage = personRepository.findAll(pageable);
+
+        var personVospage = personPage.map(p -> DozerMapper.parseObject(p, PersonVO.class))
+                .map(vo -> vo.add(linkTo(methodOn(PersonController.class).findById(vo.getKey())).withSelfRel()));
+
+        return personVospage;
     }
 
     @Transactional
