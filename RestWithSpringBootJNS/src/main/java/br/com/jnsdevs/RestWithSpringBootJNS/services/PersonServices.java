@@ -7,13 +7,16 @@ import br.com.jnsdevs.RestWithSpringBootJNS.exceptions.ResourceNotFoundException
 import br.com.jnsdevs.RestWithSpringBootJNS.mapper.DozerMapper;
 import br.com.jnsdevs.RestWithSpringBootJNS.model.Person;
 import br.com.jnsdevs.RestWithSpringBootJNS.repository.PersonRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
-import jakarta.transaction.Transactional;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.logging.Logger;
 
@@ -32,6 +35,9 @@ public class PersonServices {
 
     @Autowired
     private PersonRepository personRepository;
+
+    @Autowired
+    private PagedResourcesAssembler<PersonVO> assembler;
 
     public PersonVO create(PersonVO personVO) {
         logger.info("Creating one person!");
@@ -71,14 +77,20 @@ public class PersonServices {
         return vo;
     }
 
-    public Page<PersonVO> findAll(Pageable pageable) {
+    public PagedModel<EntityModel<PersonVO>> findAll(Pageable pageable) {
         logger.info("Finding one person!");
         Page<Person> personPage = personRepository.findAll(pageable);
 
         var personVospage = personPage.map(p -> DozerMapper.parseObject(p, PersonVO.class))
                 .map(vo -> vo.add(linkTo(methodOn(PersonController.class).findById(vo.getKey())).withSelfRel()));
 
-        return personVospage;
+        Link link = linkTo(
+                methodOn(PersonController.class)
+                        .findAll(pageable.getPageNumber(),
+                                pageable.getPageSize(),
+                                "asc")).withSelfRel();
+
+        return assembler.toModel(personVospage, link);
     }
 
     @Transactional
