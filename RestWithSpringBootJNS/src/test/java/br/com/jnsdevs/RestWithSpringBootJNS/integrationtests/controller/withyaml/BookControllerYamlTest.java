@@ -1,30 +1,14 @@
 package br.com.jnsdevs.RestWithSpringBootJNS.integrationtests.controller.withyaml;
 
-import static io.restassured.RestAssured.given;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
-import org.springframework.boot.test.context.SpringBootTest;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-
 import br.com.jnsdevs.RestWithSpringBootJNS.configs.TestConfigs;
-import br.com.jnsdevs.RestWithSpringBootJNS.integrationtests.controller.withyaml.mapper.YMLMapper;
-import br.com.jnsdevs.RestWithSpringBootJNS.integrationtests.testcontainers.AbstractIntegrationTest;
 import br.com.jnsdevs.RestWithSpringBootJNS.data.vo.v1.security.AccountCredentialsVO;
 import br.com.jnsdevs.RestWithSpringBootJNS.data.vo.v1.security.TokenVO;
+import br.com.jnsdevs.RestWithSpringBootJNS.integrationtests.controller.withyaml.mapper.YMLMapper;
+import br.com.jnsdevs.RestWithSpringBootJNS.integrationtests.testcontainers.AbstractIntegrationTest;
 import br.com.jnsdevs.RestWithSpringBootJNS.integrationtests.vo.BookVO;
+import br.com.jnsdevs.RestWithSpringBootJNS.integrationtests.vo.pagedmodels.PagedModelBook;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.config.EncoderConfig;
 import io.restassured.config.RestAssuredConfig;
@@ -33,6 +17,18 @@ import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.Date;
+import java.util.List;
+
+import static io.restassured.RestAssured.given;
+import static org.junit.jupiter.api.Assertions.*;
 /**
  * @Autor Jairo Nascimento
  * @Created 18/08/2023 - 10:01
@@ -221,16 +217,17 @@ public class BookControllerYamlTest extends AbstractIntegrationTest {
                 .spec(specification)
                 .contentType(TestConfigs.CONTENT_TYPE_YML)
                 .accept(TestConfigs.CONTENT_TYPE_YML)
+                .queryParams("page", 0 , "limit", 12, "direction", "asc")
                 .when()
                 .get()
                 .then()
                 .statusCode(200)
                 .extract()
                 .body()
-                .as(BookVO[].class, objectMapper);
+                .as(PagedModelBook.class, objectMapper);
 
 
-        List<BookVO> content = Arrays.asList(response);
+        List<BookVO> content = response.getContent();
 
         BookVO foundBookOne = content.get(0);
 
@@ -239,9 +236,9 @@ public class BookControllerYamlTest extends AbstractIntegrationTest {
         assertNotNull(foundBookOne.getAuthor());
         assertNotNull(foundBookOne.getPrice());
         assertTrue(foundBookOne.getId() > 0);
-        assertEquals("Working effectively with legacy code", foundBookOne.getTitle());
-        assertEquals("Michael C. Feathers", foundBookOne.getAuthor());
-        assertEquals(49.00, foundBookOne.getPrice());
+        assertEquals("Big Data: como extrair volume, variedade, velocidade e valor da avalanche de informação cotidiana", foundBookOne.getTitle());
+        assertEquals("Viktor Mayer-Schonberger e Kenneth Kukier", foundBookOne.getAuthor());
+        assertEquals(54.00, foundBookOne.getPrice());
 
         BookVO foundBookFive = content.get(4);
 
@@ -250,9 +247,9 @@ public class BookControllerYamlTest extends AbstractIntegrationTest {
         assertNotNull(foundBookFive.getAuthor());
         assertNotNull(foundBookFive.getPrice());
         assertTrue(foundBookFive.getId() > 0);
-        assertEquals("Code complete", foundBookFive.getTitle());
-        assertEquals("Steve McConnell", foundBookFive.getAuthor());
-        assertEquals(58.0, foundBookFive.getPrice());
+        assertEquals("Domain Driven Design", foundBookFive.getTitle());
+        assertEquals("Eric Evans", foundBookFive.getAuthor());
+        assertEquals(92.00, foundBookFive.getPrice());
     }
 
     private void mockBook() {
