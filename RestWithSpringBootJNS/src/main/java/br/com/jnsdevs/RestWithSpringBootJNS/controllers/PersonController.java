@@ -13,10 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 import static br.com.jnsdevs.RestWithSpringBootJNS.util.MediaType.APPLICATION_YML;
 
@@ -55,9 +55,12 @@ public class PersonController {
             })
     public ResponseEntity<Page<PersonVO>> findAll(
             @RequestParam(value = "page", defaultValue = "0") Integer page,
-            @RequestParam(value = "size", defaultValue = "12") Integer size
+            @RequestParam(value = "size", defaultValue = "12") Integer size,
+            @RequestParam(value = "direction", defaultValue = "asc") String direction
     ) {
-        Pageable pageable = PageRequest.of(page, size);
+        var sortDirection = "desc".equalsIgnoreCase(direction)
+                ? Direction.DESC : Direction.ASC;
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection, "firstName"));
         return ResponseEntity.ok(personServices.findAll(pageable));
     }
 
@@ -132,7 +135,7 @@ public class PersonController {
     }
 
     @PatchMapping(value = "/{id}",
-            produces = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML  })
+            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML})
     @Operation(summary = "Disable a specific Person by your ID", description = "Disable a specific Person by your ID",
             tags = {"People"},
             responses = {
@@ -149,6 +152,7 @@ public class PersonController {
     public PersonVO disablePerson(@PathVariable(value = "id") Long id) {
         return personServices.disablePerson(id);
     }
+
     @DeleteMapping(value = "/{id}")
     @Operation(summary = "Deletes a Person",
             description = "Deletes a Person by passing in a JSON, XML or YML representation of the person!",
