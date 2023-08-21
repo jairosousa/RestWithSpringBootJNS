@@ -1,0 +1,1083 @@
+{
+	"info": {
+		"_postman_id": "bf05fd9a-a2a0-4a4b-8bc4-0bf8d4873289",
+		"name": "RESTful API With Spring Boot 2.1.3",
+		"description": "Some description about your API.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1010130"
+	},
+	"item": [
+		{
+			"name": "api",
+			"item": [
+				{
+					"name": "Book",
+					"item": [
+						{
+							"name": "Find all books",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Origin",
+										"value": "https://jnsdevs.com.br",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{host}}/api/book/v1?page=1&size=10",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"book",
+										"v1"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "size",
+											"value": "10"
+										},
+										{
+											"key": "direction",
+											"value": "desc",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update a specific book",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "{{content_accept}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "{{content_type}}"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{bearer_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "book"
+								},
+								"url": {
+									"raw": "{{host}}/api/book/v1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"book",
+										"v1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create a new book",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "{{content_accept}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "{{content_type}}"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{bearer_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "book"
+								},
+								"url": {
+									"raw": "{{host}}/api/book/v1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"book",
+										"v1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find a specific book by your ID",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "{{content_accept}}"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{bearer_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{host}}/api/book/v1/:id",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"book",
+										"v1",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "{{id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete a specific book by your ID",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{bearer_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{host}}/api/book/v1/:id",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"book",
+										"v1",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "{{id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Person",
+					"item": [
+						{
+							"name": "old",
+							"item": [
+								{
+									"name": "findAll",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{host}}/person",
+											"host": [
+												"{{host}}"
+											],
+											"path": [
+												"person"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "delete",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{host}}/person/4",
+											"host": [
+												"{{host}}"
+											],
+											"path": [
+												"person",
+												"4"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "update",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\": 2,\r\n    \"firstName\": \"Girasol\",\r\n    \"lastName\": \"Tomate\",\r\n    \"address\": \"Uberlândia\",\r\n    \"gender\": \"Female\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{host}}/person",
+											"host": [
+												"{{host}}"
+											],
+											"path": [
+												"person"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "create",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"firstName\": \"Jucelina\",\r\n    \"lastName\": \"Brandão\",\r\n    \"address\": \"Uberlândia\",\r\n    \"gender\": \"Female\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{host}}/person",
+											"host": [
+												"{{host}}"
+											],
+											"path": [
+												"person"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "createV2",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"firstName\": \"Paulo\",\r\n    \"lastName\": \"Gorayebe\",\r\n    \"address\": \"Uberlândia\",\r\n    \"gender\": \"Male\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{host}}/person/v2",
+											"host": [
+												"{{host}}"
+											],
+											"path": [
+												"person",
+												"v2"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Find all people",
+							"protocolProfileBehavior": {
+								"strictSSL": false
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "{{content_accept}}",
+										"disabled": true
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{host}}/api/person/v1?page=0&size=10",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"person",
+										"v1"
+									],
+									"query": [
+										{
+											"key": "mediaTypepage",
+											"value": "xml",
+											"disabled": true
+										},
+										{
+											"key": "page",
+											"value": "0"
+										},
+										{
+											"key": "size",
+											"value": "10"
+										},
+										{
+											"key": "direction",
+											"value": "desc",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find By name people",
+							"protocolProfileBehavior": {
+								"strictSSL": false
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "{{content_accept}}",
+										"disabled": true
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{host}}/api/person/v1/findPersonByName/be?page=0&size=10",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"person",
+										"v1",
+										"findPersonByName",
+										"be"
+									],
+									"query": [
+										{
+											"key": "mediaTypepage",
+											"value": "xml",
+											"disabled": true
+										},
+										{
+											"key": "page",
+											"value": "0"
+										},
+										{
+											"key": "size",
+											"value": "10"
+										},
+										{
+											"key": "direction",
+											"value": "desc",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update a specific person",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "{{content_accept}}",
+										"disabled": true
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{bearer_token}}",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 1,\r\n    \"address\": \"Belém\",\r\n    \"gender\": \"Female\",\r\n    \"firstName\": \"Carla\",\r\n    \"lastName\": \"Serra\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/person/v1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"person",
+										"v1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create a new person",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearer_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"address\": \"Uberlândia\",\r\n    \"firstName\": \"Jairo\",\r\n    \"lastName\": \"Filho\",\r\n    \"gender\": \"Male\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/person/v1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"person",
+										"v1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find a specific person by your ID",
+							"protocolProfileBehavior": {
+								"strictSSL": false,
+								"followRedirects": false,
+								"disableUrlEncoding": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Origin",
+										"value": "https://jnsdev.com.br",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{host}}/api/person/v1/1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"person",
+										"v1",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Disable person",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{bearer_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Origin",
+										"value": "https://jnsdev.com.br",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{host}}/api/person/v1/1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"person",
+										"v1",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete a specific person by your ID",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{bearer_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{host}}/api/person/v1/:id",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"person",
+										"v1",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "{{id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Login",
+					"item": [
+						{
+							"name": "Authenticate an user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"if (responseCode.code >= 200 && responseCode.code <= 299) {",
+											"    var jsonData = JSON.parse(responseBody);",
+											"    postman.setEnvironmentVariable('bearer_token', jsonData.accessToken);",
+											"    postman.setEnvironmentVariable(\"refresh_token\", jsonData.refreshToken);",
+											"    postman.setEnvironmentVariable(\"token\", jsonData.accessToken);",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"username\":\"{{user}}\",\n\t\"password\":\"{{password}}\"\n}"
+								},
+								"url": {
+									"raw": "{{host}}/auth/signin",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"auth",
+										"signin"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Refresh token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"if (responseCode.code >= 200 && responseCode.code <= 299) {",
+											"    var jsonData = JSON.parse(responseBody);",
+											"    postman.setEnvironmentVariable('bearer_token', jsonData.accessToken);",
+											"    postman.setEnvironmentVariable(\"refresh_token\", jsonData.refreshToken);",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{refresh_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Origin",
+										"value": "http://localhost:8080",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{host}}/auth/refresh/{{user}}",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"auth",
+										"refresh",
+										"{{user}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "file",
+					"item": [
+						{
+							"name": "Upload a File",
+							"protocolProfileBehavior": {
+								"strictSSL": false
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "{{content_accept}}",
+										"disabled": true
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "file",
+											"type": "file",
+											"src": "/D:/Code/testUpload/novo teste.pdf"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{host}}/api/file/v1/uploadFile",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"file",
+										"v1",
+										"uploadFile"
+									],
+									"query": [
+										{
+											"key": "mediaTypepage",
+											"value": "xml",
+											"disabled": true
+										},
+										{
+											"key": "direction",
+											"value": "desc",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Upload multiple Files",
+							"protocolProfileBehavior": {
+								"strictSSL": false
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "{{content_accept}}",
+										"disabled": true
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "files",
+											"type": "file",
+											"src": [
+												"/D:/Code/testUpload/arquivo teste.txt",
+												"/D:/Code/testUpload/arquivo teste1.txt",
+												"/D:/Code/testUpload/arquivo teste2.txt",
+												"/D:/Code/testUpload/arquivo teste3.txt"
+											]
+										}
+									]
+								},
+								"url": {
+									"raw": "{{host}}/api/file/v1/uploadMultipleFiles",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"file",
+										"v1",
+										"uploadMultipleFiles"
+									],
+									"query": [
+										{
+											"key": "mediaTypepage",
+											"value": "xml",
+											"disabled": true
+										},
+										{
+											"key": "direction",
+											"value": "desc",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Download a File",
+							"protocolProfileBehavior": {
+								"strictSSL": false
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "{{content_accept}}",
+										"disabled": true
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{host}}/api/file/v1/downloadFile/arquivo%20teste3.txt",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"file",
+										"v1",
+										"downloadFile",
+										"arquivo%20teste3.txt"
+									],
+									"query": [
+										{
+											"key": "mediaTypepage",
+											"value": "xml",
+											"disabled": true
+										},
+										{
+											"key": "direction",
+											"value": "desc",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"description": "Folder for api"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"if (responseCode.code >= 200 && responseCode.code <= 299) {",
+					"    var jsonData = JSON.parse(responseBody);",
+					"    postman.setEnvironmentVariable('bearer_token', jsonData.accessToken);",
+					"}"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "user",
+			"value": "jairo"
+		},
+		{
+			"key": "password",
+			"value": "admin123"
+		}
+	]
+}
