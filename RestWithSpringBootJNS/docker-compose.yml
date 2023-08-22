@@ -22,7 +22,7 @@ services:
     image: jnsousa/rest-with-spring-boot-jns
     restart: always
     build: .
-    working_dir: /rest-with-spring-boot-and-java-jns
+    working_dir: /RestWithSpringBootJNS
     environment:
       TZ: America/Sao_Paulo
       SPRING.DATASOURCE.URL: jdbc:mysql://db:3308/rest_with_spring_boot_db?useTimezone=true&serverTimezone=UTC
