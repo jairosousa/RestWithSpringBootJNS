@@ -74,6 +74,16 @@ $ docker compose ls
 $ docker logs <id container> -f
 ```
 
+## Enviar Docker image para Dockerhub
+
+```shell
+$ docker login
+```
+
+```shell
+$ docker push usuario/nome_imagem
+```
+
 
 # Referências
 * [Spring Boot Docker](https://spring.io/guides/topicals/spring-boot-docker/)

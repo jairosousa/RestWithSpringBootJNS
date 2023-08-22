@@ -1,5 +1,5 @@
 # Rest With Spring Boot 3.0
-
+[![Docker Hub Repo](https://img.shields.io/docker/pulls/jnsousa/rest-with-spring-boot-jns.svg)](https://hub.docker.com/repository/docker/jnsousa/rest-with-spring-boot-jns)
 
 ## Repositorio do Curso
 
