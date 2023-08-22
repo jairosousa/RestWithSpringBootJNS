@@ -1,5 +1,6 @@
 # Rest With Spring Boot 3.0
 [![Docker Hub Repo](https://img.shields.io/docker/pulls/jnsousa/rest-with-spring-boot-jns.svg)](https://hub.docker.com/repository/docker/jnsousa/rest-with-spring-boot-jns)
+[![Continuous Integration with Github Actions](https://github.com/jairosousa/RestWithSpringBootJNS/actions/workflows/continuos-integration.yml/badge.svg)](https://github.com/jairosousa/RestWithSpringBootJNS/actions/workflows/continuos-integration.yml)
 
 ## Repositorio do Curso
 
