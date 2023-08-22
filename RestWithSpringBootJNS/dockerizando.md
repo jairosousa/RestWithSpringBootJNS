@@ -8,7 +8,7 @@ $ mvn clean package -DskipTests=true
 ```
 
 ```
-FROM eclipse-temurin:17-jdk-slim
+FROM openjdk:17-jdk-slim
 ARG JAR_FILE=target/*.jar
 COPY ${JAR_FILE} app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
@@ -59,6 +59,20 @@ networks:
     driver: bridge
 ```
 
+### Gerar imagem e subir a aplicação
+```shell
+$ docker compose up -d --build
+```
+
+### Listar comtainers com docker compose
+```shell
+$ docker compose ls
+```
+
+### Listar e acompanhar logs container
+```shell
+$ docker logs <id container> -f
+```
 
 
 # Referências
